@@ -75,9 +75,9 @@ func NewServer(opts ServerOptions) *Server {
 	}
 }
 
-// Start runs the HTTP server.
-func (s *Server) Start() error {
-	addr := fmt.Sprintf("%s:%d", s.host, s.port)
+// Handler builds the full HTTP handler (routes + CORS middleware).
+// It is used by Start and lets tests exercise the real routing table.
+func (s *Server) Handler() http.Handler {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", s.handleRoot)
@@ -100,7 +100,13 @@ func (s *Server) Start() error {
 	mux.HandleFunc("/api/chat", s.handleOllamaChat)
 	mux.HandleFunc("/api/generate", s.handleOllamaGenerate)
 
-	handler := s.corsMiddleware(mux)
+	return s.corsMiddleware(mux)
+}
+
+// Start runs the HTTP server.
+func (s *Server) Start() error {
+	addr := fmt.Sprintf("%s:%d", s.host, s.port)
+	handler := s.Handler()
 
 	s.mu.Lock()
 	s.httpServer = &http.Server{
