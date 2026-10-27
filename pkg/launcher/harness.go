@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"nexus-cli/pkg/cli"
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // LaunchHarness runs DeepSeek evaluation benchmarks or a custom test harness script.

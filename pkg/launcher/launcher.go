@@ -10,9 +10,9 @@ import (
 	"runtime"
 	"time"
 
-	"nexus-cli/pkg/cli"
-	"nexus-cli/pkg/deepseek"
-	"nexus-cli/pkg/server"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/server"
 )
 
 // Options holds common launcher options.

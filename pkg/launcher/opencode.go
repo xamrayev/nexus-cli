@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
 )
 
 // LaunchOpenCode runs OpenCode CLI wired to Nexus proxy using OPENCODE_CONFIG_CONTENT.

@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // SessionManager manages conversation sessions isolated by agent/user ID.

@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // ServerOptions contains configuration for the local API proxy server.

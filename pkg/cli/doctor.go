@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // RunDoctor performs end-to-end diagnostics on DeepSeek API connectivity, auth, and PoW.

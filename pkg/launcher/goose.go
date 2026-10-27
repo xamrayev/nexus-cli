@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"time"
 
-	"nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
 )
 
 // LaunchGoose runs Goose CLI agent wired to Nexus proxy.

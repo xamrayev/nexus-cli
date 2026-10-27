@@ -49,7 +49,7 @@ Ushbu dastur Node.js (`FreeDeepseekAPI-EN`) va Python (`deepseek_bridge`) loyiha
 
 ## 📦 O'rnatish va Kompilyatsiya
 
-Go 1.20+ o'rnatilgan bo'lishi kifoya:
+Go 1.24+ o'rnatilgan bo'lishi kifoya:
 
 ```bash
 # Repozitoriyani yuklab oling va papkaga o'ting:
@@ -57,10 +57,10 @@ git clone https://github.com/xamrayev/nexus-cli.git
 cd nexus-cli
 
 # Binar faylni yaratish:
-go build -o bin/nexus .
+go build -o bin/nexus ./cmd/nexus
 
 # Tizimga global o'rnatish (ixtiyoriy):
-go install .
+go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
 
 ---
@@ -254,7 +254,7 @@ nexus-cli/
 ├── bin/
 │   └── nexus                     # Kompilyatsiya qilingan binar fayl
 ├── cmd/
-│   └── nexus/main.go             # CLI buyruqlari dispetcheri
+│   └── nexus/main.go             # Kirish nuqtasi va CLI buyruqlari dispetcheri
 ├── pkg/
 │   ├── deepseek/
 │   │   ├── pow.go                # Sof Go parallel DeepSeekHashV1 Keccak PoW solver
@@ -278,7 +278,6 @@ nexus-cli/
 │       ├── repl.go               # Interaktiv terminal chat va slash buyruqlar
 │       ├── runner.go             # Bir martalik va quvurli (pipe) so'rovlar
 │       └── doctor.go             # To'liq tizim diagnostikasi
-├── main.go                       # Asosiy kirish nuqtasi
 ├── go.mod                        # Go moduli
 └── README.md                     # Asosiy hujjat (Ingliz tilida)
 ```

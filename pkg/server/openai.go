@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // OpenAIRequest represents a chat completions request.

@@ -49,7 +49,7 @@ Rewritten from scratch in pure Go (Golang) based on in-depth analysis of Node.js
 
 ## 📦 Installation & Build
 
-Requires Go 1.20+:
+Requires Go 1.24+:
 
 ```bash
 # Clone repository and navigate to directory:
@@ -57,10 +57,10 @@ git clone https://github.com/xamrayev/nexus-cli.git
 cd nexus-cli
 
 # Build the executable binary:
-go build -o bin/nexus .
+go build -o bin/nexus ./cmd/nexus
 
 # Install globally to system PATH (optional):
-go install .
+go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
 
 ---
@@ -254,7 +254,7 @@ nexus-cli/
 ├── bin/
 │   └── nexus                     # Compiled binary executable
 ├── cmd/
-│   └── nexus/main.go             # CLI command dispatcher
+│   └── nexus/main.go             # Application entry point & CLI command dispatcher
 ├── pkg/
 │   ├── deepseek/
 │   │   ├── pow.go                # Pure Go parallel DeepSeekHashV1 Keccak PoW solver
@@ -278,7 +278,6 @@ nexus-cli/
 │       ├── repl.go               # Interactive terminal chat & slash commands
 │       ├── runner.go             # Single-prompt and Unix pipe runner
 │       └── doctor.go             # End-to-end system diagnostics
-├── main.go                       # Application entry point
 ├── go.mod                        # Go module definition
 ├── README.md                     # Main documentation (English)
 ├── README.ru.md                  # Russian documentation (Русский)

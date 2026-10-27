@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // OllamaMessage represents a message in Ollama chat API.

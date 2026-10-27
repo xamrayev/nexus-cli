@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"time"
 
-	"nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
 )
 
 // LaunchAider runs Aider pair-programming CLI wired to Nexus proxy.

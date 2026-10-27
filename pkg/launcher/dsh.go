@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
 )
 
 // LaunchDSH launches the official DeepSeek Harness agent (@deepseek-ai/dsh).

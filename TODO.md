@@ -20,28 +20,28 @@
 3. Release workflow binarlarni yig'ib, GitHub Release yaratadi.
 
 ### Amalga oshirish vazifalari
-- [ ] `main.go` dagi `const version = "1.0.0"` ni `var version = "dev"` ga almashtirish; `commit` va `date` o'zgaruvchilarini qo'shish.
-- [ ] Build'da ldflags orqali uzatish: `go build -ldflags "-X main.version=$(git describe --tags --always --dirty) -X main.commit=$(git rev-parse --short HEAD)"`.
-- [ ] `nexus version` chiqishiga commit va build sanasini qo'shish.
-- [ ] `CHANGELOG.md` yaratish (birinchi yozuv: `v0.1.0`).
-- [ ] `.goreleaser.yaml` + `.github/workflows/release.yml` (`v*` tag push'da ishlaydi): linux/darwin/windows × amd64/arm64 arxivlari, `checksums.txt`, GitHub Release.
+- [x] `version`, `commit`, `date` — `var`, default `"dev"`; ldflags orqali to'ldiriladi (`cmd/nexus/main.go`).
+- [x] ldflags bo'lmasa (`go install ...@v0.1.0`) — versiya va commit Go build ma'lumotidan olinadi.
+- [x] `nexus version` commit va build sanasini ko'rsatadi.
+- [x] `CHANGELOG.md` yaratildi (birinchi yozuv: `v0.1.0`).
+- [x] `.goreleaser.yaml` + `.github/workflows/release.yml` (`v*` tag push'da ishlaydi); CI har PR'da snapshot reliz yig'ib tekshiradi.
 - [ ] Birinchi tag: `v0.1.0`.
 - [ ] (ixtiyoriy) PR sarlavhasi Conventional Commits formatida ekanini CI'da tekshirish.
 - [ ] Eslatma: `pkg/server/ollama.go` dagi `"0.1.32"` — bu emulyatsiya qilinayotgan Ollama versiyasi, Nexus versiyasi emas; tegmaslik.
 
 ## 2. Xavfsizlik
-- [ ] **Oshkor bo'lgan `API_KEY` ni bekor qilib, yangisini olish** (repo ochiq, 5 ta fork bor — tarix tozalansa ham kalit eskirgan hisoblanadi).
-- [ ] `.env` dan git tarixini tozalash (force push) — tasdiq kutilmoqda.
-- [ ] `.gitignore` ga `.env` va `.env.*` qo'shish.
+- [x] Oshkor bo'lgan `API_KEY` bekor qilindi, yangisi olindi.
+- [x] `.env` git tarixidan tozalandi (force push), eski PR tarmog'i o'chirildi.
+- [x] `.gitignore` ga `.env` va `.env.*` qo'shildi.
 
 ## 3. Ko'rib chiqishda topilgan kamchiliklar
-- [ ] `main.go` va `cmd/nexus/main.go` bir xil (to'liq dublikat). Bittasini qoldirish — tavsiya: `cmd/nexus/main.go`, ildizdagini o'chirish (README'dagi build buyruqlarini yangilash bilan).
-- [ ] `go.mod` dagi modul nomi `nexus-cli` — `go install github.com/xamrayev/nexus-cli/...` ishlamaydi. `module github.com/xamrayev/nexus-cli` ga o'zgartirish va importlarni yangilash.
-- [ ] `github.com/gorilla/websocket` to'g'ridan-to'g'ri ishlatiladi, lekin `// indirect` deb belgilangan — `go mod tidy`.
-- [ ] `go 1.26.1` — talab qilinadigan minimal versiya juda yangi; kerak bo'lmasa `go 1.24` ga tushirish ko'proq foydalanuvchiga build qilish imkonini beradi.
+- [x] Dublikat `main.go` o'chirildi; yagona kirish nuqtasi — `cmd/nexus/main.go`. README'lar yangilandi.
+- [x] Modul nomi `github.com/xamrayev/nexus-cli`; `go install github.com/xamrayev/nexus-cli/cmd/nexus@latest` ishlaydi.
+- [x] `go mod tidy` — `gorilla/websocket` to'g'ridan-to'g'ri bog'liqlik.
+- [x] Minimal Go versiyasi `1.24` (README'larda ham).
 
 ## 4. Testlar
-Hozirgi holat (CI'da): `gofmt`, `go vet`, unit testlar (linux/macos/windows, linuxda `-race`), `scripts/smoke.sh` (CLI buyruqlari + lokal API server), 5 platformaga cross-build.
+Hozirgi holat (CI'da): `gofmt`, `go vet`, unit testlar (linux/macos/windows, linuxda `-race`), `scripts/smoke.sh` (CLI buyruqlari + lokal API server), GoReleaser snapshot (5 platforma).
 
 Qamrov: `server` ~25%, `deepseek` ~25%, `cli` ~10%, `launcher` ~0%.
 - [ ] `/v1/chat/completions`, `/v1/messages`, `/v1/responses` uchun DeepSeek javobini soxtalashtirilgan (`httptest`) klient bilan testlar — hozir faqat auth/405 tekshiriladi.

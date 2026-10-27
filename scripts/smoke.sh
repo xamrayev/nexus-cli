@@ -24,7 +24,7 @@ check() { if printf '%s' "$3" | grep -q -- "$2"; then pass "$1"; else printf '%s
 
 if [ -z "${NEXUS_BIN:-}" ]; then
   echo "▶ build"
-  (cd "$ROOT" && go build -o "$BIN" .)
+  (cd "$ROOT" && go build -o "$BIN" ./cmd/nexus)
 fi
 
 # Run from an empty dir so ./accounts and auth files are never picked up.
