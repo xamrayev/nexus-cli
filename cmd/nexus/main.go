@@ -8,16 +8,58 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"runtime/debug"
 	"strings"
 	"syscall"
 
-	"nexus-cli/pkg/cli"
-	"nexus-cli/pkg/deepseek"
-	"nexus-cli/pkg/launcher"
-	"nexus-cli/pkg/server"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/launcher"
+	"github.com/xamrayev/nexus-cli/pkg/server"
 )
 
-const version = "1.0.0"
+// Build metadata. Set at build time via ldflags, e.g.:
+//
+//	go build -ldflags "-X main.version=v0.1.0 -X main.commit=abc1234 -X main.date=2026-10-27T00:00:00Z" ./cmd/nexus
+//
+// GoReleaser fills these automatically from the git tag.
+var (
+	version = "dev"
+	commit  = ""
+	date    = ""
+)
+
+// versionString returns the version line printed by `nexus version`.
+// When ldflags were not set (e.g. `go install ...@v0.1.0`), it falls back
+// to the module version and VCS info recorded by the Go toolchain.
+func versionString() string {
+	v, c, d := version, commit, date
+	if info, ok := debug.ReadBuildInfo(); ok {
+		if v == "dev" && info.Main.Version != "" && info.Main.Version != "(devel)" {
+			v = info.Main.Version
+		}
+		for _, kv := range info.Settings {
+			switch kv.Key {
+			case "vcs.revision":
+				if c == "" && len(kv.Value) >= 7 {
+					c = kv.Value[:7]
+				}
+			case "vcs.time":
+				if d == "" {
+					d = kv.Value
+				}
+			}
+		}
+	}
+	out := fmt.Sprintf("Nexus-CLI versiyasi: %s (DeepSeek Web Bridge for Go)", v)
+	if c != "" {
+		out += "\n  commit: " + c
+	}
+	if d != "" {
+		out += "\n  sana:   " + d
+	}
+	return out
+}
 
 func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
@@ -68,7 +110,7 @@ func main() {
 		handleModels()
 
 	case "version", "-v", "--version":
-		fmt.Printf("Nexus-CLI versiyasi: %s (DeepSeek Web Bridge for Go)\n", version)
+		fmt.Println(versionString())
 
 	case "help", "-h", "--help":
 		printHelp()

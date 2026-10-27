@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // AnthropicRequest represents a request to /v1/messages.

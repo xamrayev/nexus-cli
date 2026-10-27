@@ -49,7 +49,7 @@
 
 ## 📦 Установка и сборка
 
-Требуется установленный Go версии 1.20+:
+Требуется установленный Go версии 1.24+:
 
 ```bash
 # Клонируйте репозиторий и перейдите в папку:
@@ -57,10 +57,10 @@ git clone https://github.com/xamrayev/nexus-cli.git
 cd nexus-cli
 
 # Сборка бинарного файла:
-go build -o bin/nexus .
+go build -o bin/nexus ./cmd/nexus
 
 # Глобальная установка в систему (по желанию):
-go install .
+go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
 
 ---
@@ -254,7 +254,7 @@ nexus-cli/
 ├── bin/
 │   └── nexus                     # Скомпилированный исполняемый файл
 ├── cmd/
-│   └── nexus/main.go             # Диспетчер команд CLI
+│   └── nexus/main.go             # Точка входа и диспетчер команд CLI
 ├── pkg/
 │   ├── deepseek/
 │   │   ├── pow.go                # Параллельный Keccak-солвер DeepSeekHashV1 на чистом Go
@@ -278,7 +278,6 @@ nexus-cli/
 │       ├── repl.go               # Интерактивный чат в терминале и слэш-команды
 │       ├── runner.go             # Обработка одиночных и конвейерных (pipe) запросов
 │       └── doctor.go             # Полная диагностика системы
-├── main.go                       # Главная точка входа
 ├── go.mod                        # Go модуль
 └── README.md                     # Документация проекта (на английском языке)
 ```

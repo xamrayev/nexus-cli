@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/cli"
 )
 
 // LaunchCodexDirect runs OpenAI Codex CLI wired to Nexus proxy using profile config or CLI overrides.
