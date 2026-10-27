@@ -12,11 +12,11 @@ import (
 
 // OpenAIRequest represents a chat completions request.
 type OpenAIRequest struct {
-	Model       string                 `json:"model"`
-	Messages    []deepseek.ChatMessage `json:"messages"`
-	Stream      bool                   `json:"stream"`
-	Tools       []interface{}          `json:"tools,omitempty"`
-	User        string                 `json:"user,omitempty"`
+	Model          string                 `json:"model"`
+	Messages       []deepseek.ChatMessage `json:"messages"`
+	Stream         bool                   `json:"stream"`
+	Tools          []interface{}          `json:"tools,omitempty"`
+	User           string                 `json:"user,omitempty"`
 	MaxTokens      *int                   `json:"max_tokens,omitempty"`
 	Temperature    *float64               `json:"temperature,omitempty"`
 	ResponseFormat json.RawMessage        `json:"response_format,omitempty"`
@@ -33,9 +33,9 @@ type OpenAIResponse struct {
 }
 
 type OpenAIChoice struct {
-	Index        int                    `json:"index"`
-	Message      OpenAIMessage          `json:"message"`
-	FinishReason string                 `json:"finish_reason"`
+	Index        int           `json:"index"`
+	Message      OpenAIMessage `json:"message"`
+	FinishReason string        `json:"finish_reason"`
 }
 
 type OpenAIMessage struct {
