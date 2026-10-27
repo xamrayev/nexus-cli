@@ -28,12 +28,12 @@ type Client struct {
 
 // ClientOptions configures the Client.
 type ClientOptions struct {
-	Token      string
-	AuthPath   string
-	Timeout    time.Duration
-	BaseURL    string
-	Pool       *AccountPool
-	Account    *Account
+	Token    string
+	AuthPath string
+	Timeout  time.Duration
+	BaseURL  string
+	Pool     *AccountPool
+	Account  *Account
 }
 
 // NewClient creates a new DeepSeek Web client.

@@ -146,7 +146,7 @@ func (p *StreamParser) applyPatch(data map[string]interface{}) (*ChatChunk, erro
 	}
 
 	// Legacy paths
-	if (p.path == "response/content" || p.path == "response/thinking_content") {
+	if p.path == "response/content" || p.path == "response/thinking_content" {
 		if text, ok := val.(string); ok {
 			fType := "RESPONSE"
 			if strings.Contains(p.path, "thinking") {
