@@ -5,3 +5,8 @@ auth.json
 accounts/*.json
 .DS_Store
 ollama/
+
+# Secrets
+.env
+.env.*
+!.env.example
