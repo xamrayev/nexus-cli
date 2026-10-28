@@ -42,10 +42,10 @@ llm-pi-ai:
       api: openai-completions
       baseURL: "http://localhost:%d/v1"
       models:
-        - name: deepseek-reasoner
-          displayName: "DeepSeek R1 (Reasoner)"
-        - name: deepseek-chat
-          displayName: "DeepSeek V3 (Chat)"
+        - id: deepseek-reasoner
+          name: "DeepSeek R1 (Reasoner)"
+        - id: deepseek-chat
+          name: "DeepSeek V3 (Chat)"
 `, opts.Port)
 
 	if err := os.WriteFile(settingsPath, []byte(settingsContent), 0o644); err != nil {
