@@ -10,6 +10,10 @@ Format [Keep a Changelog](https://keepachangelog.com/) asosida, versiyalash
 ### Qo'shildi
 - `nexus launch claude --api` — Claude Code'ni DeepSeek rasmiy API'siga (`api.deepseek.com/anthropic`) to'g'ridan-to'g'ri ulash: mahalliy proxy va web-akkauntsiz. Kalit `DEEPSEEK_API_KEY` yoki `--api-key` orqali; modellar `-m flash` (default, `deepseek-flash[1m]`) va `-m pro` (`deepseek-v4-pro`).
 
+### Tuzatildi
+- `nexus launch claude` endi `ANTHROPIC_AUTH_TOKEN` va `ANTHROPIC_API_KEY` ni birga o'rnatmaydi. Ikkalasi ham qo'yilganda Claude Code "auth may not work as expected" deb ogohlantirar, `ANTHROPIC_API_KEY` ni tashqi auth deb hisoblab claude.ai connector'larini o'chirib qo'yardi. Endi faqat `ANTHROPIC_AUTH_TOKEN` beriladi — proxy uni bearer token sifatida qabul qiladi.
+- `nexus launch claude` va `nexus launch --exec` endi meros qilingan `ANTHROPIC_*` o'zgaruvchilarni tozalaydi, shuning uchun foydalanuvchining haqiqiy Anthropic kaliti yoki model sozlamalari proxy sessiyasiga aralashmaydi.
+
 ## [0.1.0] - 2026-10-27
 
 Birinchi rasmiy reliz.
