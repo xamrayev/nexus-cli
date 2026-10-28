@@ -140,12 +140,7 @@ func LaunchClaude(ctx context.Context, opts Options) error {
 	fmt.Printf("  Modelni almashtirish: Claude ichida /model <nomi> yoki nexus launch claude -m <nomi>\n\n")
 
 	cmd := exec.CommandContext(ctx, claudePath, args...)
-	cmd.Env = append(os.Environ(),
-		fmt.Sprintf("ANTHROPIC_BASE_URL=http://localhost:%d", opts.Port),
-		"ANTHROPIC_AUTH_TOKEN=nexus",
-		"ANTHROPIC_API_KEY=nexus",
-		fmt.Sprintf("ANTHROPIC_MODEL=%s", modelName),
-	)
+	cmd.Env = ClaudeProxyEnv(os.Environ(), opts.Port, modelName)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

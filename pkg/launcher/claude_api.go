@@ -43,29 +43,13 @@ func ResolveAPIModel(name string) string {
 // (so a real Anthropic key or an earlier Nexus setup cannot leak in or conflict)
 // and sets the variables recommended by DeepSeek's Claude Code guide.
 func ClaudeAPIEnv(base []string, apiKey, model string) []string {
-	drop := map[string]bool{
-		"ANTHROPIC_BASE_URL":             true,
-		"ANTHROPIC_API_KEY":              true,
-		"ANTHROPIC_AUTH_TOKEN":           true,
-		"ANTHROPIC_MODEL":                true,
-		"ANTHROPIC_SMALL_FAST_MODEL":     true,
-		"ANTHROPIC_DEFAULT_OPUS_MODEL":   true,
-		"ANTHROPIC_DEFAULT_SONNET_MODEL": true,
-		"ANTHROPIC_DEFAULT_HAIKU_MODEL":  true,
-		"CLAUDE_CODE_SUBAGENT_MODEL":     true,
-	}
-
-	env := make([]string, 0, len(base)+10)
 	hasCompactWindow := false
 	for _, kv := range base {
-		k, _, _ := strings.Cut(kv, "=")
-		if k == "CLAUDE_CODE_AUTO_COMPACT_WINDOW" {
+		if k, _, _ := strings.Cut(kv, "="); k == "CLAUDE_CODE_AUTO_COMPACT_WINDOW" {
 			hasCompactWindow = true
 		}
-		if !drop[k] {
-			env = append(env, kv)
-		}
 	}
+	env := withoutClaudeEnv(base)
 
 	main := ResolveAPIModel(model)
 	// DeepSeek's guide pairs the 1M-context flash model with this compaction

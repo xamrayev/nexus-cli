@@ -140,7 +140,9 @@ func runExternalHarness(ctx context.Context, opts Options) error {
 	fmt.Printf("  Injected ANTHROPIC_BASE_URL: http://localhost:%d\n\n", opts.Port)
 
 	cmd := exec.CommandContext(ctx, "sh", "-c", cmdStr)
-	cmd.Env = append(os.Environ(),
+	// Drop inherited ANTHROPIC_* first: the script talks to the proxy, so a real
+	// Anthropic setup would only conflict with the key injected below.
+	cmd.Env = append(withoutClaudeEnv(os.Environ()),
 		fmt.Sprintf("OPENAI_BASE_URL=http://localhost:%d/v1", opts.Port),
 		fmt.Sprintf("ANTHROPIC_BASE_URL=http://localhost:%d", opts.Port),
 		"OPENAI_API_KEY=nexus",
