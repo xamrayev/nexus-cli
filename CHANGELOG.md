@@ -7,6 +7,8 @@ Format [Keep a Changelog](https://keepachangelog.com/) asosida, versiyalash
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-28
+
 ### Qo'shildi
 - `nexus launch claude --api` — Claude Code'ni DeepSeek rasmiy API'siga (`api.deepseek.com/anthropic`) to'g'ridan-to'g'ri ulash: mahalliy proxy va web-akkauntsiz. Kalit `DEEPSEEK_API_KEY` yoki `--api-key` orqali; modellar `-m flash` (default, `deepseek-flash[1m]`) va `-m pro` (`deepseek-v4-pro`).
 
@@ -37,5 +39,6 @@ Birinchi rasmiy reliz.
 ### Xavfsizlik
 - `.env` git tarixidan olib tashlandi va `.gitignore` ga qo'shildi.
 
-[Unreleased]: https://github.com/xamrayev/nexus-cli/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/xamrayev/nexus-cli/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/xamrayev/nexus-cli/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/xamrayev/nexus-cli/releases/tag/v0.1.0
