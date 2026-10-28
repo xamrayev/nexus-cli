@@ -223,6 +223,17 @@ Claude Code, DeepSeek Harness, Codex, OpenCode, Goose, Aider kabi barcha AI vosi
 ./bin/nexus launch harness
 ```
 
+#### Claude Code + DeepSeek rasmiy API (`--api`)
+Web-ko'prik o'rniga DeepSeek'ning rasmiy Anthropic-mos API'sidan (`https://api.deepseek.com/anthropic`) foydalanadi: mahalliy proxy, web-akkaunt va PoW kerak emas. Pullik, lekin barqaror va akkaunt bloklanish xavfi yo'q.
+
+```bash
+export DEEPSEEK_API_KEY=sk-...          # https://platform.deepseek.com/api_keys
+./bin/nexus launch claude --api         # deepseek-flash (1M kontekst)
+./bin/nexus launch claude --api -m pro  # deepseek-v4-pro
+```
+
+Muhitdagi `ANTHROPIC_*` o'zgaruvchilari (masalan, haqiqiy Anthropic kaliti) Claude Code ishga tushishidan oldin olib tashlanadi va DeepSeek'ga yuborilmaydi. Kalitni `--api-key` emas, `DEEPSEEK_API_KEY` orqali bering: buyruq qatoridagi kalit shell tarixida qoladi.
+
 ### 8. Ko'p Akkauntlar Hovuzi (Multi-Account Pool) 👥
 Cheklovlarga (HTTP 429) tushmaslik uchun bir nechta DeepSeek akkauntlarini navbatma-navbat (Round-Robin) ishlatish:
 
