@@ -36,6 +36,10 @@ check "nexus version"       "Nexus-CLI versiyasi"  "$("$BIN" version 2>&1)"
 check "nexus --help"        "Foydalanish"          "$("$BIN" --help 2>&1)"
 check "nexus models"        "deepseek"             "$("$BIN" models 2>&1)"
 check "nexus launch (menu)" "Mavjud platformalar"  "$("$BIN" launch 2>&1)"
+check "launch claude --api without key → hint" "DEEPSEEK_API_KEY" \
+  "$(env -u DEEPSEEK_API_KEY "$BIN" launch claude --api 2>&1 || true)"
+check "launch codex --api → rejected" "faqat 'nexus launch claude'" \
+  "$("$BIN" launch codex --api 2>&1 || true)"
 
 echo "▶ local API server"
 "$BIN" serve --host 127.0.0.1 --port "$PORT" --key smoke-key --accounts-dir "$WORK/accounts" >"$WORK/serve.log" 2>&1 &

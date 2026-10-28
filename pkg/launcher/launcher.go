@@ -21,6 +21,12 @@ type Options struct {
 	Model       string
 	AccountsDir string
 	ExtraArgs   []string
+
+	// UseAPI switches `launch claude` to the DeepSeek official API
+	// instead of the local web-bridge proxy.
+	UseAPI bool
+	// APIKey is the DeepSeek API key for UseAPI mode (falls back to $DEEPSEEK_API_KEY).
+	APIKey string
 }
 
 // EnsureServer verifies if Nexus proxy server is running, or starts an embedded one.
@@ -265,6 +271,8 @@ Mavjud platformalar:
 Misollar:
   nexus launch claude
   nexus launch claude -p "Ushbu loyihani tahlil qil"
+  nexus launch claude --api            (DeepSeek rasmiy API, $DEEPSEEK_API_KEY)
+  nexus launch claude --api -m pro     (deepseek-v4-pro modeli)
   nexus launch dsh
   nexus launch codex
   nexus launch opencode

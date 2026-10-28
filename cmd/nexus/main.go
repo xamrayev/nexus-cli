@@ -134,6 +134,7 @@ func printHelp() {
 
 Launch Integratsiyalari:
   nexus launch claude                  Claude Code CLI (DeepSeek R1 / V3 bilan)
+  nexus launch claude --api            Claude Code + DeepSeek rasmiy API ($DEEPSEEK_API_KEY)
   nexus launch dsh                     Official DeepSeek Harness (@deepseek-ai/dsh CLI)
   nexus launch codex                   OpenAI Codex CLI (OpenAI Responses wire API)
   nexus launch opencode                OpenCode CLI (avtomatik config bilan)
@@ -164,6 +165,7 @@ Bayroqlar (Flags):
 Misollar:
   nexus "Salom, dunyo!"
   nexus launch claude
+  nexus launch claude --api -m pro
   nexus launch codex
   nexus launch harness
   nexus auth list
@@ -560,10 +562,26 @@ func handleLaunch(ctx context.Context, args []string) {
 	rawExtra := args[1:]
 
 	model := ""
+	useAPI := false
+	apiKey := ""
 	var extra []string
 	for i := 0; i < len(rawExtra); i++ {
 		arg := rawExtra[i]
-		if arg == "-m" || arg == "--model" {
+		if arg == "--api" || arg == "--official" {
+			useAPI = true
+			continue
+		} else if arg == "--api-key" {
+			useAPI = true
+			if i+1 < len(rawExtra) {
+				apiKey = rawExtra[i+1]
+				i++
+			}
+			continue
+		} else if strings.HasPrefix(arg, "--api-key=") {
+			apiKey = strings.TrimPrefix(arg, "--api-key=")
+			useAPI = true
+			continue
+		} else if arg == "-m" || arg == "--model" {
 			if i+1 < len(rawExtra) {
 				model = rawExtra[i+1]
 				i++
@@ -583,11 +601,23 @@ func handleLaunch(ctx context.Context, args []string) {
 		Port:      9655,
 		Model:     model,
 		ExtraArgs: extra,
+		UseAPI:    useAPI,
+		APIKey:    apiKey,
+	}
+
+	isClaude := target == "claude" || target == "claude-code"
+	if useAPI && !isClaude {
+		fmt.Fprintf(os.Stderr, "Xatolik: --api rejimi hozircha faqat 'nexus launch claude' uchun.\n")
+		os.Exit(1)
 	}
 
 	switch target {
 	case "claude", "claude-code":
-		if err := launcher.LaunchClaude(ctx, opts); err != nil {
+		launch := launcher.LaunchClaude
+		if useAPI {
+			launch = launcher.LaunchClaudeAPI
+		}
+		if err := launch(ctx, opts); err != nil {
 			fmt.Fprintf(os.Stderr, "Xatolik: %v\n", err)
 			os.Exit(1)
 		}

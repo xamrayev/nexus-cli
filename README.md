@@ -223,6 +223,17 @@ Launch coding tools and agents with a single command — Nexus automatically boo
 ./bin/nexus launch harness
 ```
 
+#### Claude Code + DeepSeek official API (`--api`)
+Uses DeepSeek's official Anthropic-compatible API (`https://api.deepseek.com/anthropic`) instead of the web bridge: no local proxy, no web account, no PoW. It is paid, but stable and free of web-account ban risk.
+
+```bash
+export DEEPSEEK_API_KEY=sk-...          # https://platform.deepseek.com/api_keys
+./bin/nexus launch claude --api         # deepseek-flash (1M context)
+./bin/nexus launch claude --api -m pro  # deepseek-v4-pro
+```
+
+Inherited `ANTHROPIC_*` variables (e.g. a real Anthropic key) are removed before Claude Code starts, so they never reach DeepSeek. Prefer `DEEPSEEK_API_KEY` over `--api-key`: a key on the command line stays in shell history.
+
 ### 8. Multi-Account Pool 👥
 Avoid rate limits (HTTP 429) by cycling through multiple DeepSeek accounts using Round-Robin rotation:
 

@@ -223,6 +223,17 @@ curl http://localhost:9655/v1/chat/completions -d '{
 ./bin/nexus launch harness
 ```
 
+#### Claude Code + официальный API DeepSeek (`--api`)
+Использует официальный Anthropic-совместимый API DeepSeek (`https://api.deepseek.com/anthropic`) вместо web-моста: без локального прокси, без web-аккаунта и без PoW. Платно, но стабильно и без риска блокировки аккаунта.
+
+```bash
+export DEEPSEEK_API_KEY=sk-...          # https://platform.deepseek.com/api_keys
+./bin/nexus launch claude --api         # deepseek-flash (контекст 1M)
+./bin/nexus launch claude --api -m pro  # deepseek-v4-pro
+```
+
+Унаследованные переменные `ANTHROPIC_*` (например, настоящий ключ Anthropic) удаляются перед запуском Claude Code и не попадают в DeepSeek. Лучше задавать ключ через `DEEPSEEK_API_KEY`, а не `--api-key`: ключ в командной строке остаётся в истории shell.
+
 ### 8. Пул нескольких аккаунтов (Multi-Account Pool) 👥
 Использование нескольких аккаунтов DeepSeek по очереди (Round-Robin) для устранения проблем с лимитами (HTTP 429):
 
