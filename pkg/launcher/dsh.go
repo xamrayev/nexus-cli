@@ -28,38 +28,41 @@ func LaunchDSH(ctx context.Context, opts Options) error {
 		return fmt.Errorf("failed to create dsh config dir: %w", err)
 	}
 
-	settingsPath := filepath.Join(dshDir, "settings.yaml")
 	patchPath := filepath.Join(dshDir, "patch.yaml")
 
-	settingsContent := fmt.Sprintf(`agent-default-model:
-  provider: nexus
-  model: deepseek-reasoner
-llm-pi-ai:
-  providers:
-    nexus:
-      displayName: "Nexus (DeepSeek R1/V3)"
-      apiKeyEnv: NEXUS_API_KEY
-      api: openai-completions
-      baseURL: "http://localhost:%d/v1"
-      models:
-        - id: deepseek-reasoner
-          name: "DeepSeek R1 (Reasoner)"
-        - id: deepseek-chat
-          name: "DeepSeek V3 (Chat)"
-`, opts.Port)
-
-	if err := os.WriteFile(settingsPath, []byte(settingsContent), 0o644); err != nil {
-		return fmt.Errorf("failed to write dsh settings: %w", err)
-	}
-
-	patchContent := fmt.Sprintf(`- id: settings
+	// dsh composes its plugin tree from the profile's bundles, then the profile's
+	// cordis.patch.yml, then any --patch overlay, so these entries win over the
+	// profile's own default model. llm-pi-ai ships mounted but dormant: it serves
+	// no routes until a provider profile reaches its config, which is what the
+	// first entry supplies.
+	patchContent := fmt.Sprintf(`- id: llm-pi-ai
+  name: '@deepseek-ai/dsh-llm-pi-ai'
   config:
-    path: %q
-`, settingsPath)
+    providers:
+      nexus:
+        displayName: "Nexus (DeepSeek R1/V3)"
+        apiKeyEnv: NEXUS_API_KEY
+        api: openai-completions
+        baseURL: "http://localhost:%d/v1"
+        models:
+          - id: deepseek-reasoner
+            name: "DeepSeek R1 (Reasoner)"
+          - id: deepseek-chat
+            name: "DeepSeek V3 (Chat)"
+- id: agent-default-model
+  name: '@deepseek-ai/dsh-agent-default-model'
+  config:
+    provider: nexus
+    model: deepseek-reasoner
+`, opts.Port)
 
 	if err := os.WriteFile(patchPath, []byte(patchContent), 0o644); err != nil {
 		return fmt.Errorf("failed to write dsh patch: %w", err)
 	}
+
+	// Earlier versions wrote a settings.yaml here and pointed the `settings`
+	// loader entry at it, which never loaded: dsh-settings takes no such path.
+	_ = os.Remove(filepath.Join(dshDir, "settings.yaml"))
 
 	// 2. Ensure local Nexus API server is running
 	srv, started, err := EnsureServer(ctx, opts.Port, opts.AccountsDir)
