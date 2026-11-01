@@ -56,12 +56,20 @@ Requires Go 1.24+:
 git clone https://github.com/xamrayev/nexus-cli.git
 cd nexus-cli
 
-# Build the executable binary:
+# Build the executable binary (stamps the version into it):
+make build
+
+# Or without make — `nexus version` then falls back to a Go pseudo-version:
 go build -o bin/nexus ./cmd/nexus
 
 # Install globally to system PATH (optional):
 go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
+
+Other targets: `make check` runs what CI runs (gofmt, vet, tests, smoke test),
+`make cover` reports coverage, `make snapshot` builds the release artifacts
+locally. `make build VERSION=v0.3.0-rc.1` stamps a specific version.
+
 
 
 ---
@@ -275,6 +283,7 @@ nexus-cli/
 │       ├── repl.go               # Interactive terminal chat & slash commands
 │       ├── runner.go             # Single-prompt and Unix pipe runner
 │       └── doctor.go             # End-to-end system diagnostics
+├── Makefile                      # Build with version metadata, plus the CI checks
 ├── go.mod                        # Go module definition
 ├── README.md                     # Main documentation (English)
 ├── README.ru.md                  # Russian documentation (Русский)

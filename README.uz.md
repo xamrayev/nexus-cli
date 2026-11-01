@@ -56,12 +56,20 @@ Go 1.24+ o'rnatilgan bo'lishi kifoya:
 git clone https://github.com/xamrayev/nexus-cli.git
 cd nexus-cli
 
-# Binar faylni yaratish:
+# Binar faylni yaratish (versiya binarga yoziladi):
+make build
+
+# make'siz ham mumkin, lekin `nexus version` Go pseudo-versiyasini ko'rsatadi:
 go build -o bin/nexus ./cmd/nexus
 
 # Tizimga global o'rnatish (ixtiyoriy):
 go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
+
+Boshqa target'lar: `make check` — CI bajaradigan hammasi (gofmt, vet, testlar,
+smoke test), `make cover` — qamrov hisoboti, `make snapshot` — reliz artefaktlarini
+mahalliy yig'ish. `make build VERSION=v0.3.0-rc.1` aniq versiyani yozadi.
+
 
 
 ---
@@ -275,6 +283,7 @@ nexus-cli/
 │       ├── repl.go               # Interaktiv terminal chat va slash buyruqlar
 │       ├── runner.go             # Bir martalik va quvurli (pipe) so'rovlar
 │       └── doctor.go             # To'liq tizim diagnostikasi
+├── Makefile                      # Versiyali build va CI tekshiruvlari
 ├── go.mod                        # Go moduli
 └── README.md                     # Asosiy hujjat (Ingliz tilida)
 ```

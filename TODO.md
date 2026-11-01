@@ -25,7 +25,7 @@
 - [x] `nexus version` commit va build sanasini ko'rsatadi.
 - [x] `CHANGELOG.md` yaratildi (birinchi yozuv: `v0.1.0`).
 - [x] `.goreleaser.yaml` + `.github/workflows/release.yml` (`v*` tag push'da ishlaydi); CI har PR'da snapshot reliz yig'ib tekshiradi.
-- [ ] Birinchi tag: `v0.1.0`.
+- [x] Birinchi tag: `v0.1.0` (2026-10-27), keyin `v0.2.0` (2026-10-28).
 - [ ] (ixtiyoriy) PR sarlavhasi Conventional Commits formatida ekanini CI'da tekshirish.
 - [ ] Eslatma: go-deepseek-web kutubxonasidagi `server/ollama.go` dagi `"0.1.32"` — bu emulyatsiya qilinayotgan Ollama versiyasi, Nexus versiyasi emas; tegmaslik.
 

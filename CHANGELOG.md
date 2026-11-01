@@ -7,6 +7,9 @@ Format [Keep a Changelog](https://keepachangelog.com/) asosida, versiyalash
 
 ## [Unreleased]
 
+### Qo'shildi
+- `Makefile` — `make build` versiya, commit va sanani binarga yozadi (GoReleaser'dagi ldflags'ning aynan o'zi), shuning uchun mahalliy yig'ilgan binar ham `nexus version` da to'g'ri versiyani ko'rsatadi. Qo'shimcha target'lar: `check` (CI bajaradigan hammasi), `test`, `cover`, `vet`, `fmt`, `smoke`, `snapshot`, `run`, `clean`. `make build VERSION=v0.3.0-rc.1` bilan aniq versiya yoziladi.
+
 ### O'zgardi
 - DeepSeek web mijozi va proxy server alohida kutubxonaga ko'chirildi — [go-deepseek-web](https://github.com/xamrayev/go-deepseek-web). `pkg/deepseek` va `pkg/server` repozitoriyadan olib tashlandi (~5900 qator), nexus-cli endi ularni dependency sifatida oladi. CLI xulq-atvori o'zgarmadi: server log qatorlari va `/health` javobi avvalgidek, akkaunt fayllari eski joylardan (`~/.nexus-cli`, `~/.nexus`) ham o'qiladi.
 

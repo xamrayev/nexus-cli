@@ -56,12 +56,20 @@
 git clone https://github.com/xamrayev/nexus-cli.git
 cd nexus-cli
 
-# Сборка бинарного файла:
+# Сборка бинарного файла (версия записывается в бинарник):
+make build
+
+# Без make тоже работает, но `nexus version` покажет псевдо-версию Go:
 go build -o bin/nexus ./cmd/nexus
 
 # Глобальная установка в систему (по желанию):
 go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
+
+Остальные цели: `make check` — всё, что делает CI (gofmt, vet, тесты,
+smoke-тест), `make cover` — отчёт о покрытии, `make snapshot` — локальная сборка
+релизных артефактов. `make build VERSION=v0.3.0-rc.1` ставит конкретную версию.
+
 
 
 ---
@@ -275,6 +283,7 @@ nexus-cli/
 │       ├── repl.go               # Интерактивный чат в терминале и слэш-команды
 │       ├── runner.go             # Обработка одиночных и конвейерных (pipe) запросов
 │       └── doctor.go             # Полная диагностика системы
+├── Makefile                      # Сборка с версией и проверки CI
 ├── go.mod                        # Go модуль
 └── README.md                     # Документация проекта (на английском языке)
 ```
