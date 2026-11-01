@@ -7,6 +7,13 @@ Format [Keep a Changelog](https://keepachangelog.com/) asosida, versiyalash
 
 ## [Unreleased]
 
+### O'zgardi
+- DeepSeek web mijozi va proxy server alohida kutubxonaga ko'chirildi — [go-deepseek-web](https://github.com/xamrayev/go-deepseek-web). `pkg/deepseek` va `pkg/server` repozitoriyadan olib tashlandi (~5900 qator), nexus-cli endi ularni dependency sifatida oladi. CLI xulq-atvori o'zgarmadi: server log qatorlari va `/health` javobi avvalgidek, akkaunt fayllari eski joylardan (`~/.nexus-cli`, `~/.nexus`) ham o'qiladi.
+
+### Tuzatildi
+- `nexus launch dsh` endi provayderni dsh haqiqatan o'qiydigan patch orqali sozlaydi. Avval `settings.yaml` yozib, uni `settings` yozuvining `config.path` i orqali ulashga urinardi, lekin `dsh-settings` plaginida bunday sozlama yo'q — fayl hech qachon yuklanmagan. Natijada model tanlagichda faqat dsh'ning o'z katalogidagi modellar ko'rinardi.
+- `nexus launch dsh` yozadigan model yozuvlari dsh sxemasiga moslashtirildi: `id` (majburiy) va `name`, avvalgi `name` + `displayName` o'rniga.
+
 ## [0.2.0] - 2026-10-28
 
 ### Qo'shildi

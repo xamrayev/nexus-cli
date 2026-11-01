@@ -12,10 +12,10 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/xamrayev/go-deepseek-web/deepseek"
+	"github.com/xamrayev/go-deepseek-web/server"
 	"github.com/xamrayev/nexus-cli/pkg/cli"
-	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 	"github.com/xamrayev/nexus-cli/pkg/launcher"
-	"github.com/xamrayev/nexus-cli/pkg/server"
 )
 
 // Build metadata. Set at build time via ldflags, e.g.:
@@ -62,6 +62,10 @@ func versionString() string {
 }
 
 func main() {
+	// The library searches a neutral set of auth-file locations; Nexus keeps
+	// looking in its own two, so credentials saved by earlier versions still load.
+	deepseek.ExtraAuthDirs = []string{".nexus-cli", ".nexus"}
+
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
 
@@ -228,6 +232,8 @@ func handleServe(ctx context.Context, args []string) {
 		MaxConcurrent: *maxConcurrent,
 		AccountsDir:   *accountsDir,
 		Client:        client,
+		ServiceName:   cli.ServiceName,
+		OnListen:      cli.ServerListenLogger(),
 	})
 
 	cli.PrintBanner(os.Stdout)

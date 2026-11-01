@@ -63,6 +63,7 @@ go build -o bin/nexus ./cmd/nexus
 go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
 
+
 ---
 
 ## 🔑 Akkauntni Bog'lash (Autentifikatsiya)
@@ -267,21 +268,6 @@ nexus-cli/
 ├── cmd/
 │   └── nexus/main.go             # Kirish nuqtasi va CLI buyruqlari dispetcheri
 ├── pkg/
-│   ├── deepseek/
-│   │   ├── pow.go                # Sof Go parallel DeepSeekHashV1 Keccak PoW solver
-│   │   ├── pow_test.go           # PoW testlari va benchmark
-│   │   ├── stream.go             # SSE JSON patch va OpenAI stream parser
-│   │   ├── stream_test.go        # Stream testlari
-│   │   ├── auth.go               # Token, sessiya va profil boshqaruvi
-│   │   ├── chrome_auth.go        # Chrome CDP avtomatik autentifikatsiya
-│   │   ├── client.go             # DeepSeek Web API mijozi (Chat, Sessions, Auto-retry)
-│   │   └── types.go              # Model konfiguratsiyalari va tiplar
-│   ├── server/
-│   │   ├── server.go             # Mahalliy HTTP proxy server (Routing, CORS, Auth)
-│   │   ├── server_test.go        # Server endpoint testlari
-│   │   ├── openai.go             # OpenAI Chat Completions API adapteri
-│   │   ├── anthropic.go          # Anthropic Messages API adapteri (Claude Code uchun)
-│   │   └── session.go            # Agent sessiyalari izolyatsiyasi va tozalash
 │   ├── launcher/
 │   │   └── launcher.go           # Claude Code, Codex, Goose, Aider launcherlari
 │   └── cli/
@@ -292,6 +278,11 @@ nexus-cli/
 ├── go.mod                        # Go moduli
 └── README.md                     # Asosiy hujjat (Ingliz tilida)
 ```
+
+DeepSeek web mijozi va uning ustiga qurilgan proxy server alohida kutubxonaga
+ko'chirilgan — [go-deepseek-web](https://github.com/xamrayev/go-deepseek-web),
+shuning uchun boshqa loyihalar ham ulardan foydalana oladi. Bu repozitoriyada
+CLI, launcherlar va terminal interfeysi qoldi.
 
 ---
 

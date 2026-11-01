@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/xamrayev/nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/go-deepseek-web/deepseek"
 )
 
 // REPL manages interactive terminal chat sessions.

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/xamrayev/go-deepseek-web/deepseek"
 	"github.com/xamrayev/nexus-cli/pkg/cli"
-	"github.com/xamrayev/nexus-cli/pkg/deepseek"
 )
 
 // LaunchPool displays and monitors the Nexus multi-account pool.

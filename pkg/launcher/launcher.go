@@ -10,9 +10,9 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/xamrayev/go-deepseek-web/deepseek"
+	"github.com/xamrayev/go-deepseek-web/server"
 	"github.com/xamrayev/nexus-cli/pkg/cli"
-	"github.com/xamrayev/nexus-cli/pkg/deepseek"
-	"github.com/xamrayev/nexus-cli/pkg/server"
 )
 
 // Options holds common launcher options.
@@ -50,6 +50,8 @@ func EnsureServer(ctx context.Context, port int, accountsDir string) (*server.Se
 		Host:        "127.0.0.1",
 		Port:        port,
 		AccountsDir: accountsDir,
+		ServiceName: cli.ServiceName,
+		OnListen:    cli.ServerListenLogger(),
 	})
 
 	serverErrCh := make(chan error, 1)

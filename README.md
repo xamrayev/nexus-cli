@@ -63,6 +63,7 @@ go build -o bin/nexus ./cmd/nexus
 go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
 
+
 ---
 
 ## 🔑 Authentication (Account Linking)
@@ -267,21 +268,6 @@ nexus-cli/
 ├── cmd/
 │   └── nexus/main.go             # Application entry point & CLI command dispatcher
 ├── pkg/
-│   ├── deepseek/
-│   │   ├── pow.go                # Pure Go parallel DeepSeekHashV1 Keccak PoW solver
-│   │   ├── pow_test.go           # PoW test suite & benchmarks
-│   │   ├── stream.go             # SSE JSON patch & OpenAI stream parser
-│   │   ├── stream_test.go        # Stream tests
-│   │   ├── auth.go               # Token, session, and profile manager
-│   │   ├── chrome_auth.go        # Automated Chrome CDP authentication
-│   │   ├── client.go             # DeepSeek Web API client (Chat, Sessions, Auto-retry)
-│   │   └── types.go              # Model configs and type definitions
-│   ├── server/
-│   │   ├── server.go             # Local HTTP proxy server (Routing, CORS, Auth)
-│   │   ├── server_test.go        # Server endpoint unit tests
-│   │   ├── openai.go             # OpenAI Chat Completions API adapter
-│   │   ├── anthropic.go          # Anthropic Messages API adapter (for Claude Code)
-│   │   └── session.go            # Agent session isolation and cleanup
 │   ├── launcher/
 │   │   └── launcher.go           # Launchers for Claude Code, Codex, Goose, Aider, etc.
 │   └── cli/
@@ -294,6 +280,11 @@ nexus-cli/
 ├── README.ru.md                  # Russian documentation (Русский)
 └── README.uz.md                  # Uzbek documentation (O'zbekcha)
 ```
+
+The DeepSeek web client and the proxy server it builds on live in a separate
+library, [go-deepseek-web](https://github.com/xamrayev/go-deepseek-web), so other
+projects can reuse them. This repository holds the CLI, the launchers and the
+terminal UI.
 
 ---
 

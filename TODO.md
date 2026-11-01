@@ -27,7 +27,7 @@
 - [x] `.goreleaser.yaml` + `.github/workflows/release.yml` (`v*` tag push'da ishlaydi); CI har PR'da snapshot reliz yig'ib tekshiradi.
 - [ ] Birinchi tag: `v0.1.0`.
 - [ ] (ixtiyoriy) PR sarlavhasi Conventional Commits formatida ekanini CI'da tekshirish.
-- [ ] Eslatma: `pkg/server/ollama.go` dagi `"0.1.32"` — bu emulyatsiya qilinayotgan Ollama versiyasi, Nexus versiyasi emas; tegmaslik.
+- [ ] Eslatma: go-deepseek-web kutubxonasidagi `server/ollama.go` dagi `"0.1.32"` — bu emulyatsiya qilinayotgan Ollama versiyasi, Nexus versiyasi emas; tegmaslik.
 
 ## 2. Xavfsizlik
 - [x] Oshkor bo'lgan `API_KEY` bekor qilindi, yangisi olindi.

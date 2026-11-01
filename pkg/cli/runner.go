@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/xamrayev/nexus-cli/pkg/deepseek"
+	"github.com/xamrayev/go-deepseek-web/deepseek"
 )
 
 // RunSinglePrompt executes a one-off prompt or piped input and streams to stdout.

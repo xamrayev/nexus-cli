@@ -63,6 +63,7 @@ go build -o bin/nexus ./cmd/nexus
 go install github.com/xamrayev/nexus-cli/cmd/nexus@latest
 ```
 
+
 ---
 
 ## 🔑 Аутентификация (Подключение аккаунта)
@@ -267,21 +268,6 @@ nexus-cli/
 ├── cmd/
 │   └── nexus/main.go             # Точка входа и диспетчер команд CLI
 ├── pkg/
-│   ├── deepseek/
-│   │   ├── pow.go                # Параллельный Keccak-солвер DeepSeekHashV1 на чистом Go
-│   │   ├── pow_test.go           # Тесты и бенчмарки PoW
-│   │   ├── stream.go             # Парсер SSE JSON patch и стриминга OpenAI
-│   │   ├── stream_test.go        # Тесты парсера стриминга
-│   │   ├── auth.go               # Управление токенами, сессиями и профилями
-│   │   ├── chrome_auth.go        # Автоматическая авторизация через Chrome CDP
-│   │   ├── client.go             # Клиент DeepSeek Web API (чат, сессии, автоповторы)
-│   │   └── types.go              # Конфигурации моделей и типы данных
-│   ├── server/
-│   │   ├── server.go             # Локальный HTTP прокси-сервер (маршрутизация, CORS, авторизация)
-│   │   ├── server_test.go        # Тесты эндпоинтов сервера
-│   │   ├── openai.go             # Адаптер OpenAI Chat Completions API
-│   │   ├── anthropic.go          # Адаптер Anthropic Messages API (для Claude Code)
-│   │   └── session.go            # Изоляция сессий агентов и очистка контекста
 │   ├── launcher/
 │   │   └── launcher.go           # Лаунчеры для Claude Code, Codex, Goose, Aider и др.
 │   └── cli/
@@ -292,6 +278,11 @@ nexus-cli/
 ├── go.mod                        # Go модуль
 └── README.md                     # Документация проекта (на английском языке)
 ```
+
+Клиент DeepSeek Web и построенный на нём прокси-сервер вынесены в отдельную
+библиотеку — [go-deepseek-web](https://github.com/xamrayev/go-deepseek-web),
+чтобы их могли использовать другие проекты. В этом репозитории остались CLI,
+лаунчеры и терминальный интерфейс.
 
 ---
 
