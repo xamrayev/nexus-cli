@@ -15,6 +15,7 @@ import (
 	"github.com/xamrayev/go-deepseek-web/deepseek"
 	"github.com/xamrayev/go-deepseek-web/server"
 	"github.com/xamrayev/nexus-cli/pkg/cli"
+	"github.com/xamrayev/nexus-cli/pkg/core"
 	"github.com/xamrayev/nexus-cli/pkg/launcher"
 )
 
@@ -113,6 +114,9 @@ func main() {
 	case "models":
 		handleModels()
 
+	case "core":
+		handleCore(ctx, os.Args[2:])
+
 	case "version", "-v", "--version":
 		fmt.Println(versionString())
 
@@ -135,6 +139,7 @@ func printHelp() {
   nexus doctor                         Ulanish va PoW sozlamalarini to'liq tekshirish (diagnostika)
   nexus models                         Mavjud DeepSeek modellari va imkoniyatlarini ko'rish
   nexus auth <buyruq>                  Autentifikatsiya va ko'p akkauntlar hovuzini boshqarish
+  nexus core <buyruq>                  Cherry-Nexus core: provayderlar va CCR marshrutlash
 
 Launch Integratsiyalari:
   nexus launch claude                  Claude Code CLI (DeepSeek R1 / V3 bilan)
@@ -157,6 +162,10 @@ Auth Buyruqlari:
   nexus auth login                     Birlamchi tokenni qo'lda kiritish
   nexus auth chrome                    Chrome orqali avtomatik login qilish
   nexus auth whoami                    Joriy hisob ma'lumotlarini ko'rish
+
+Core Buyruqlari:
+  nexus core providers   Ro'yxatdan o'tgan provayderlar va modellar
+  nexus core route <so'rov>   CCR aqlli marshrutlash qarorini ko'rsatish
 
 Bayroqlar (Flags):
   -m, --model <nom>       Modelni belgilash (default: deepseek-reasoner / R1)
@@ -555,6 +564,92 @@ func handleModels() {
 		}
 		fmt.Printf("  • %s%-24s%s -> %s\n", cli.Bold, id, cli.Reset, cfg.RealModel)
 		fmt.Printf("    Fikrlash: %s | Veb-qidiruv: %s\n\n", reasoning, search)
+	}
+}
+
+func buildCoreRegistry() *core.Registry {
+	registry := core.NewRegistry()
+	token := deepseek.NewAuthManager("", "").GetToken()
+	registry.Register(core.NewDeepSeekProvider(token))
+	return registry
+}
+
+func handleCoreProviders() {
+	registry := buildCoreRegistry()
+	fmt.Printf("\n%s%s=== Provayderlar va modellar (Cherry-Nexus core) ===%s\n\n", cli.BrightCyan, cli.Bold, cli.Reset)
+	for _, p := range registry.Providers() {
+		st := p.AuthStatus()
+		ready := "❌ Ro‘yxatdan o‘tmagan"
+		if st.Ready {
+			ready = "✅ Tayyor"
+		}
+		fmt.Printf("%s%s%s (%s)%s\n", cli.BrightGreen, p.Name(), cli.Reset, ready, st.Message)
+		for _, m := range p.Models() {
+			var caps []string
+			if m.Caps.Reasoning {
+				caps = append(caps, "fikrlash")
+			}
+			if m.Caps.WebSearch {
+				caps = append(caps, "qidiruv")
+			}
+			capsStr := ""
+			if len(caps) > 0 {
+				capsStr = " [" + strings.Join(caps, ", ") + "]"
+			}
+			fmt.Printf("    • %s%s%s%s (model: %s)\n", cli.Bold, m.ID, cli.Reset, capsStr, m.RealModel)
+		}
+		fmt.Println()
+	}
+}
+
+func handleCoreRoute(ctx context.Context, args []string) {
+	prompt := strings.Join(args, " ")
+	if strings.TrimSpace(prompt) == "" {
+		fmt.Println("So'rov bo'sh bo'lmasa kerak.")
+		return
+	}
+	registry := buildCoreRegistry()
+	router := core.NewRuleRouter(registry)
+	decision, err := router.Route(ctx, prompt)
+	if err != nil {
+		fmt.Printf("Marshrutlash xatosi: %v\n", err)
+		return
+	}
+	fmt.Printf("\n%s%s=== CCR aqlli marshrutlash ===%s\n\n", cli.BrightCyan, cli.Bold, cli.Reset)
+	fmt.Printf("So'rov: %s\n", prompt)
+	fmt.Printf("Vazifa turi: %s\n", decision.TaskType)
+	if decision.Provider == "" {
+		fmt.Printf("Provayder: %s\n", "❌ autentifikatsiya talab qilinadi")
+		fmt.Printf("Tavsiya etiladigan model: %s\n", decision.Model)
+	} else {
+		fmt.Printf("Provayder: %s\n", decision.Provider)
+		fmt.Printf("Model: %s\n", decision.Model)
+	}
+	fmt.Printf("Sabab: %s\n", decision.Reason)
+	if len(decision.Fallback) > 0 {
+		fmt.Printf("Zaxira zanjiri: %s\n", strings.Join(decision.Fallback, " -> "))
+	}
+	fmt.Println()
+}
+
+func handleCore(ctx context.Context, args []string) {
+	if len(args) == 0 {
+		fmt.Println("Foydalanish: nexus core <buyruq> [argumentlar]")
+		fmt.Println("  nexus core providers   Ro'yxatdan o'tgan provayderlar va modellar")
+		fmt.Println("  nexus core route <so'rov>   CCR aqlli marshrutlash qarorini ko'rsatish")
+		return
+	}
+	switch args[0] {
+	case "providers":
+		handleCoreProviders()
+	case "route":
+		if len(args) < 2 {
+			fmt.Println("Foydalanish: nexus core route <so'rov>")
+			return
+		}
+		handleCoreRoute(ctx, args[1:])
+	default:
+		fmt.Printf("Noma'lum core buyrug'i: %s\n", args[0])
 	}
 }
 
